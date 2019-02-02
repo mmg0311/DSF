@@ -17,28 +17,60 @@ private:
 		t data;
 		struct Node *left,*right;
 	};
-	struct Node *root;
+	struct Node *root,*r1;
 	int count;
 public:
-	BinaryTree();//constructor
+	BinaryTree(){//constructor
+		root =NULL;
+		r1 = NULL;
+		count =0;
+	}
 	void insert(t );
 	void displayLevel();
 	void display();//level wise display
 	void mirror(); // display mirror image
-	void del(); //delete a node
 	void displayLeaf(struct Node *); // to display leaf nodes
 	int height(); // calculate height
 	int he(struct Node *);
 	void pre(struct Node *);
 	void post(struct Node *);
 	void inorder(struct Node *);
+	void callCopy();
+	struct Node * copy(struct Node *r){
+		struct Node *temp;
+			if(r==NULL)
+				return r;				//IF TREE IS EMPTY
+			else
+			{
+				int x=r->data;			//GET DATA OF NODE
+				temp  = new(struct Node);
+				temp->data = x;
+				temp->left = NULL;
+				temp->right = NULL;	//ALLOCATE MEMORY
+				temp->left=copy(r->left);		//CALL FOR LCHILD
+				temp->right=copy(r->right);		//CALL FOR RCHILD
+			}
+			return temp;
+	}
 };
 
+
+
 template<typename t>
-BinaryTree<t>  :: BinaryTree(){
-	root = NULL;
-	count = 0;
+void BinaryTree<t> :: callCopy(){
+	cout << "-------------COPY-------------" <<endl;
+	r1 = copy(root);
+	cout << "PRE-ORDER TRAVERSAL OF GIVEN TREE IS :" << endl;
+	pre(r1);
+	cout << endl;
+	cout << "IN-ORDER TRAVERSAL OF GIVEN TREE IS :" << endl;
+	inorder(r1);
+	cout << endl;
+	cout << "POST-ORDER TRAVERSAL OF GIVEN TREE IS :" << endl;
+	post(root);
+	cout << endl;
 }
+
 
 template<typename t>
 void BinaryTree<t> :: insert(t a){
@@ -219,7 +251,7 @@ int main() {
 		int ch,d,h;
 
 		do{
-			cout << "ENTER CHOICE :\n1.INSERT\n2.DELETE\n3.MIRROR IMAGE\n4.DISPLAY \n5.HEIGHT OF BINARY TREE\n6.EXIT\n";
+			cout << "ENTER CHOICE :\n1.INSERT\n2.COPY\n3.DISPLAY \n4.HEIGHT OF BINARY TREE\n5.EXIT\n";
 			cin >> ch;
 			switch(ch){
 			case 1:
@@ -229,29 +261,30 @@ int main() {
 				//insert
 
 				break;
+
 			case 2:
-				//delete
+				//copy
+				b.callCopy();
 				break;
+
 			case 3:
-				//mirror image
-				break;
-			case 4:
 				//display
 				b.display();
 				break;
-			case 5:
+
+			case 4:
 				cout <<"HEIGHT OF BINARY TREE IS : " ;
 				h = b.height();
 				cout << h << endl;
 				//height
 				break;
-			case 6:
+			case 5:
 				break;
 			default:
 				cout << "ENTER VALID CHOICE" <<endl;
 				break;
 			}
 		}
-		while(ch!=6);
+		while(ch!=5);
 	return 0;
 }
