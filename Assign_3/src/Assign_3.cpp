@@ -26,6 +26,12 @@ public:
 		count =0;
 	}
 	void insert(t );
+	int empty(){
+		if(root==NULL){
+			return 1;
+		}
+		return 0;
+	}
 	void displayLevel();
 	void display();//level wise display
 	void mirror(); // display mirror image
@@ -264,15 +270,27 @@ int main() {
 
 			case 2:
 				//copy
+				if(b.empty()){
+					cout << "PLEASE GIVE INPUT" << endl;
+					break;
+				}
 				b.callCopy();
 				break;
 
 			case 3:
+				if(b.empty()){
+					cout << "PLEASE GIVE INPUT" << endl;
+					break;
+				}
 				//display
 				b.display();
 				break;
 
 			case 4:
+				if(b.empty()){
+					cout << "PLEASE GIVE INPUT" << endl;
+					break;
+				}
 				cout <<"HEIGHT OF BINARY TREE IS : " ;
 				h = b.height();
 				cout << h << endl;
@@ -288,3 +306,4 @@ int main() {
 		while(ch!=5);
 	return 0;
 }
+
